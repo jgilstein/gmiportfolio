@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jake Gilstein | Flour Frontier at General Mills</title>
+<meta name="description" content="Jake Gilstein's North America Foodservice sales internship at General Mills and the Flour Frontier project: market strategy, a custom website, and field-driven recommendations." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --gm-blue:#0033a1;
+    --gm-blue-dk:#00226e;
+    --gm-blue-br:#1f6fe0;
+    --gm-sky:#eef4fc;
+    --gm-sky-2:#e2ecf9;
+    --red:#c8102e;
+    --red-dk:#9e0c24;
+    --red-soft:#fdebee;
+    --ink:#0e2138;
+    --ink-2:#33475c;
+    --muted:#62748a;
+    --line:#dbe5f2;
+    --line-2:#c8d6ea;
+    --white:#ffffff;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --serif:'Source Serif 4',Georgia,serif;
+    --maxw:1160px;
+    --shadow:0 10px 40px rgba(14,33,56,0.08);
+    --shadow-lg:0 24px 70px rgba(0,51,161,0.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--white);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--gm-blue);color:#fff}
+  img{max-width:100%}
+
+  #progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gm-blue),var(--red));z-index:1200;transition:width .1s linear}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(18px,5vw,52px);
+    background:rgba(255,255,255,0.86);backdrop-filter:blur(12px);
+    border-bottom:1px solid transparent;transition:box-shadow .3s,border-color .3s;
+  }
+  nav.scrolled{box-shadow:0 6px 24px rgba(14,33,56,0.07);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+  .brand .mark{width:34px;height:34px;border-radius:9px;background:var(--gm-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:1.15rem;position:relative;overflow:hidden}
+  .brand .mark::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--red)}
+  .brand b{font-weight:700;font-size:1.05rem;letter-spacing:.2px;color:var(--ink)}
+  .brand b span{color:var(--gm-blue)}
+  .tabs{display:flex;gap:6px;align-items:center}
+  .tab{
+    font-size:.86rem;font-weight:500;letter-spacing:.2px;color:var(--ink-2);
+    padding:9px 15px;border-radius:9px;cursor:pointer;transition:all .2s;background:transparent;border:none;font-family:inherit;
+  }
+  .tab:hover{background:var(--gm-sky);color:var(--gm-blue)}
+  .tab.active{background:var(--gm-blue);color:#fff}
+  .nav-cta{margin-left:8px;background:var(--red);color:#fff;padding:9px 18px;border-radius:40px;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:inherit}
+  .nav-cta:hover{background:var(--red-dk);transform:translateY(-1px)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+  .hamburger span{width:24px;height:2px;background:var(--ink);transition:.3s}
+
+  /* PAGE system */
+  .page{display:none;animation:fade .5s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  section{padding:clamp(56px,8vw,104px) clamp(18px,5vw,52px);position:relative}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .pad-top{padding-top:120px}
+  .sky{background:var(--gm-sky)}
+  .navy{background:linear-gradient(160deg,var(--gm-blue),var(--gm-blue-dk));color:#fff}
+  .navy .muted,.navy p{color:rgba(255,255,255,0.86)}
+
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.76rem;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--gm-blue);margin-bottom:16px}
+  .kicker::before{content:"";width:26px;height:2px;background:var(--red)}
+  .navy .kicker{color:#fff}
+  h1,h2,h3{font-family:var(--serif);line-height:1.1;letter-spacing:-.4px}
+  h2.title{font-size:clamp(1.9rem,4.2vw,3rem);font-weight:600;margin-bottom:18px}
+  .section-head{max-width:760px;margin-bottom:54px}
+  .section-head p{color:var(--muted);font-size:1.08rem;font-weight:300}
+  p{font-weight:300}
+  .lead{font-size:1.15rem;color:var(--ink-2);font-weight:300}
+
+  /* HERO */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    padding:130px clamp(18px,5vw,52px) 80px;overflow:hidden;
+    background:
+      radial-gradient(900px 540px at 82% 8%,rgba(31,111,224,0.14),transparent 60%),
+      radial-gradient(700px 460px at 12% 92%,rgba(200,16,46,0.07),transparent 60%),
+      linear-gradient(170deg,#fff 0%,var(--gm-sky) 100%);
+  }
+  .hero canvas{position:absolute;inset:0;opacity:.7;pointer-events:none}
+  .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%}
+  .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:40px;padding:7px 16px;font-size:.8rem;font-weight:500;color:var(--gm-blue);margin-bottom:26px;box-shadow:var(--shadow)}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
+  .hero h1{font-size:clamp(2.7rem,7vw,5.4rem);font-weight:600;margin-bottom:22px;color:var(--ink)}
+  .hero h1 em{font-style:italic;color:var(--gm-blue)}
+  .hero .lead{max-width:620px;margin-bottom:18px}
+  .hero .who{color:var(--muted);max-width:560px;margin-bottom:38px;font-size:.98rem}
+  .hero .who b{color:var(--ink);font-weight:600}
+  .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:44px;font-size:.92rem;font-weight:600;cursor:pointer;transition:all .25s;border:1px solid transparent;font-family:inherit}
+  .btn-primary{background:var(--gm-blue);color:#fff}
+  .btn-primary:hover{background:var(--gm-blue-dk);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .btn-ghost{border-color:var(--line-2);color:var(--ink);background:#fff}
+  .btn-ghost:hover{border-color:var(--red);color:var(--red)}
+  .btn-light{background:#fff;color:var(--gm-blue)}
+  .btn-light:hover{transform:translateY(-2px)}
+  .btn-outline-l{border-color:rgba(255,255,255,0.5);color:#fff}
+  .btn-outline-l:hover{background:rgba(255,255,255,0.12)}
+
+  .stat-row{display:flex;gap:40px;flex-wrap:wrap;margin-top:54px}
+  .stat .n{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--gm-blue);line-height:1}
+  .stat:nth-child(2) .n,.stat:nth-child(4) .n{color:var(--red)}
+  .stat .l{font-size:.84rem;color:var(--muted);margin-top:6px}
+
+  /* generic cards */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;top:0;left:0;width:0;height:3px;background:var(--red);transition:width .35s}
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--line-2)}
+  .card:hover::before{width:100%}
+  .card .ic{width:48px;height:48px;border-radius:12px;background:var(--gm-sky);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .card .ic svg{width:24px;height:24px;stroke:var(--gm-blue);fill:none;stroke-width:1.7}
+  .card h3{font-size:1.3rem;font-weight:600;margin-bottom:12px}
+  .card p{color:var(--muted);font-size:.96rem}
+  .num-tag{font-family:var(--serif);font-size:1rem;color:var(--gm-blue);font-weight:600;letter-spacing:1px;margin-bottom:12px}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+  .chip{font-size:.8rem;font-weight:500;padding:7px 14px;border-radius:30px;border:1px solid var(--line-2);color:var(--gm-blue);background:var(--gm-sky)}
+
+  /* about photo */
+  .photo-frame{aspect-ratio:4/5;border-radius:20px;border:1px solid var(--line);background:linear-gradient(160deg,var(--gm-sky),#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--muted);text-align:center;padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .photo-frame::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--gm-blue),var(--red))}
+  .photo-frame .ring{width:118px;height:118px;border-radius:50%;background:var(--gm-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2.3rem}
+  .photo-frame small{font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase}
+
+  /* profile header */
+  .profile-row{display:flex;gap:36px;align-items:center}
+  .avatar{width:172px;height:172px;border-radius:50%;object-fit:cover;flex:none;border:5px solid #fff;box-shadow:0 0 0 3px var(--gm-blue),0 14px 36px rgba(0,51,161,0.22);position:relative}
+  .profile-info{flex:1;min-width:0}
+  .profile-info .role{color:var(--muted);font-size:.98rem;margin-bottom:4px}
+  .contact-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+  .contact-list a{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:500;color:var(--gm-blue);border:1px solid var(--line-2);background:var(--gm-sky);padding:9px 16px;border-radius:30px;transition:all .2s}
+  .contact-list a:hover{border-color:var(--gm-blue);color:var(--gm-blue-dk);transform:translateY(-1px);box-shadow:var(--shadow)}
+  .contact-list svg{flex:none}
+  .about-body{max-width:840px;margin-top:38px}
+  @media(max-width:640px){
+    .profile-row{flex-direction:column;text-align:center;gap:22px}
+    .avatar{width:140px;height:140px}
+    .contact-list{justify-content:center}
+  }
+
+  /* struggle list */
+  .stack{display:flex;flex-direction:column;gap:18px;margin-top:10px}
+  .row-item{display:flex;gap:20px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;transition:border-color .3s,transform .3s}
+  .row-item:hover{border-color:var(--red);transform:translateX(4px)}
+  .row-item .badge-n{flex:none;width:42px;height:42px;border-radius:11px;background:var(--red-soft);color:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:1.1rem}
+  .row-item h4{font-size:1.12rem;font-weight:600;margin-bottom:6px;font-family:var(--serif)}
+  .row-item p{color:var(--muted);font-size:.95rem}
+
+  /* framework lenses */
+  .frame-layout{display:grid;grid-template-columns:0.85fr 1.15fr;gap:44px;align-items:start}
+  .dim{border:1px solid var(--line);border-radius:13px;padding:16px 20px;cursor:pointer;background:#fff;transition:all .25s;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .dim:hover{border-color:var(--gm-blue);background:var(--gm-sky)}
+  .dim.active{border-color:var(--gm-blue);background:var(--gm-blue);color:#fff}
+  .dim.active .idx{color:#fff}
+  .dim .idx{font-family:var(--serif);font-size:1.15rem;color:var(--gm-blue);min-width:24px;font-weight:600}
+  .dim .lbl{font-weight:500;font-size:.98rem}
+  .dim-detail{border:1px solid var(--line);border-radius:20px;padding:42px;background:linear-gradient(160deg,var(--gm-sky),#fff);min-height:330px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow);border-top:4px solid var(--red)}
+  .dim-detail .qmark{font-family:var(--serif);font-size:4rem;color:var(--line-2);line-height:.6}
+  .dim-detail .dtag{font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin:16px 0 14px;font-weight:700}
+  .dim-detail h3{font-size:1.9rem;font-weight:600;margin-bottom:16px}
+  .dim-detail p{color:var(--ink-2);font-size:1.05rem}
+
+  /* tools */
+  .tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+  .tool{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;transition:all .3s;border-bottom:3px solid transparent}
+  .tool:hover{border-bottom-color:var(--red);transform:translateY(-5px);box-shadow:var(--shadow)}
+  .tool h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:8px;color:var(--gm-blue)}
+  .tool p{font-size:.85rem;color:var(--muted)}
+
+  /* portfolio */
+  .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+  /* timeline */
+  .timeline{position:relative;padding-left:6px}
+  .timeline::before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--gm-blue),var(--red))}
+  .tl-item{position:relative;padding:0 0 42px 56px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{position:absolute;left:5px;top:2px;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--gm-blue);display:flex;align-items:center;justify-content:center}
+  .tl-dot::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--gm-blue)}
+  .tl-item:last-child .tl-dot{border-color:var(--red)}
+  .tl-item:last-child .tl-dot::after{background:var(--red)}
+  .tl-phase{font-size:.74rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--gm-blue);font-weight:700;margin-bottom:7px}
+  .tl-item:last-child .tl-phase{color:var(--red)}
+  .tl-item h3{font-size:1.35rem;font-weight:600;margin-bottom:9px}
+  .tl-item p{color:var(--muted);max-width:680px}
+
+  /* impact */
+  .impact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .impact-card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gm-blue);border-radius:14px;padding:26px 28px;transition:transform .3s,box-shadow .3s}
+  .impact-card:nth-child(even){border-left-color:var(--red)}
+  .impact-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .impact-card h4{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:10px}
+  .impact-card p{color:var(--muted);font-size:.94rem}
+
+  /* skills */
+  .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .skill{border:1px solid var(--line);border-radius:14px;padding:24px;background:#fff;transition:all .3s}
+  .skill:hover{border-color:var(--gm-blue);transform:translateY(-4px)}
+  .skill h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:8px;color:var(--ink)}
+  .skill p{font-size:.85rem;color:var(--muted)}
+
+  /* quote */
+  .quote-band{background:linear-gradient(160deg,var(--gm-blue),var(--gm-blue-dk));color:#fff;text-align:center;position:relative;overflow:hidden}
+  .quote-band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--red)}
+  .quote-band .wrap{max-width:880px;position:relative;z-index:2}
+  .quote-band .qm{font-family:var(--serif);font-size:4.5rem;line-height:.5;color:var(--red)}
+  .quote-band blockquote{font-family:var(--serif);font-size:clamp(1.4rem,3.2vw,2.2rem);font-weight:500;line-height:1.32;margin:18px 0 22px}
+  .quote-band blockquote em{font-style:italic;color:#ff9aa8}
+  .quote-band cite{font-style:normal;color:rgba(255,255,255,0.78);font-size:.95rem}
+
+  /* contact */
+  .contact{text-align:center}
+  .contact .wrap{max-width:720px}
+  .contact h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;margin-bottom:18px}
+  .contact p{color:var(--muted);font-size:1.1rem;margin-bottom:34px}
+
+  footer{border-top:3px solid var(--red);padding:38px clamp(18px,5vw,52px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:.84rem;background:var(--gm-sky)}
+  .disclaimer{max-width:560px;font-size:.74rem;line-height:1.6}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+
+  @media(max-width:980px){
+    .tabs{display:none}
+    .hamburger{display:flex}
+    .tabs.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#fff;padding:18px;gap:8px;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+    .tabs.open .tab{text-align:left}
+    .grid-2,.frame-layout{grid-template-columns:1fr;gap:32px}
+    .grid-3,.port-grid{grid-template-columns:1fr}
+    .skills-grid{grid-template-columns:1fr 1fr}
+    .impact-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:560px){
+    .skills-grid{grid-template-columns:1fr}
+    .actions{flex-direction:column;align-items:stretch}
+    .stat-row{gap:26px}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav id="nav">
+  <div class="brand" data-go="home">
+    <div class="mark">F</div>
+    <b>Flour <span>Frontier</span></b>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-go="home">Home</button>
+    <button class="tab" data-go="project">The Project</button>
+    <button class="tab" data-go="work">The Work</button>
+    <button class="tab" data-go="impact">Impact</button>
+    <button class="tab" data-go="about">About</button>
+    <button class="nav-cta" data-go="about">Connect</button>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="home">
+  <header class="hero">
+    <canvas id="grain"></canvas>
+    <div class="hero-inner">
+      <div class="badge reveal"><span class="dot"></span> General Mills · North America Foodservice · Summer 2026</div>
+      <h1 class="reveal d1">The <em>Flour Frontier</em><br/>Project</h1>
+      <p class="lead reveal d2">For ten weeks I got to chase one big question for one of the most recognizable food companies in America: over the next decade, where should our flour business actually plant its flag?</p>
+      <p class="who reveal d3"><b>Jake Gilstein</b>, North America Foodservice Sales Intern on the Foodservice Ingredients West Zone team. University of South Florida, Business Management major and Marketing minor, with a background in strategic sales and 3PL logistics.</p>
+      <div class="actions reveal d4">
+        <button class="btn btn-primary" data-go="project">See how it came together</button>
+        <button class="btn btn-ghost" data-go="work">View the deliverables</button>
+      </div>
+      <div class="stat-row reveal d5">
+        <div class="stat"><div class="n">10</div><div class="l">weeks, start to finish</div></div>
+        <div class="stat"><div class="n">6</div><div class="l">analytical lenses</div></div>
+        <div class="stat"><div class="n">50</div><div class="l">metros studied</div></div>
+        <div class="stat"><div class="n">5</div><div class="l">deliverables shipped</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The short version</span>
+        <h2 class="title">A strategy question, answered with evidence instead of opinion.</h2>
+        <p>I walked in knowing almost nothing about commercial flour and walked out having built something the team can actually keep using. Here is the project in three pieces.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal d1">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg></div>
+          <h3>Looked back ten years</h3>
+          <p>I studied a full decade of where the business and the country had been moving, so the recommendation was anchored in real history, not a single snapshot.</p>
+        </div>
+        <div class="card reveal d2">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7 5"/></svg></div>
+          <h3>Projected ten years out</h3>
+          <p>Then I modeled forward, factoring in where people are actually moving, so the focus reflects where demand is heading and not just where it sits today.</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Built a website to leave behind</h3>
+          <p>I taught myself enough front end to design and ship this site in VS Code, paired with Codex, so the work lives on as a real tool for the team, not a slide that gets buried.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="wrap reveal">
+      <blockquote>The data told me where to <em>look.</em> The people in the field told me where it was actually <em>possible to win.</em></blockquote>
+      <cite>The lesson that reshaped the whole recommendation</cite>
+      <div class="actions" style="justify-content:center;margin-top:32px">
+        <a href="https://www.linkedin.com/in/jakegilstein/" target="_blank" rel="noopener" class="btn btn-light">Connect on LinkedIn</a>
+        <a href="mailto:jmgilstein@gmail.com" class="btn btn-outline-l">jmgilstein@gmail.com</a>
+        <a href="tel:+12678978687" class="btn btn-outline-l">(267) 897-8687</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PROJECT ============ -->
+<div class="page" id="project">
+  <section class="pad-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The Project</span>
+        <h2 class="title">From a broad, open ended question to a focused plan.</h2>
+        <p class="lead">The flour category is mature. Growth does not come from selling everywhere at once, it comes from sharper focus, better mix, and disciplined execution. My job was to figure out where that focus belonged, and to prove it.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal d1">
+          <div class="num-tag">1 · Situation</div>
+          <h3>A country on the move</h3>
+          <p>The U.S. population keeps shifting south and west. The way the category had historically been served was built for a different decade, and the growth corridors had quietly drifted away from the legacy footprint.</p>
+        </div>
+        <div class="card reveal d2">
+          <div class="num-tag">2 · Problem</div>
+          <h3>The old views hid the gaps</h3>
+          <p>Looking at the business only by customer or by channel buried the geographic story. Whole pockets of opportunity were sitting in plain sight, just not in any report anyone was looking at.</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="num-tag">3 · The Ask</div>
+          <h3>Build a market first view</h3>
+          <p>Create a clear read of where demand and growth really live, then turn it into a practical recommendation that works inside the resources the team already has.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sky">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The honest part</span>
+        <h2 class="title">It did not come together in a straight line.</h2>
+        <p>Here are the real bottlenecks I ran into, and what I did about them. This is the part I am proudest of, because solving these is what made the work usable.</p>
+      </div>
+      <div class="stack">
+        <div class="row-item reveal d1">
+          <div class="badge-n">1</div>
+          <div><h4>The metrics did not agree with each other</h4><p>Different reports measured volume and value in different ways, so two people could describe the same business and reach opposite conclusions. Before I could analyze anything, I had to standardize a single, consistent way to talk about volume, value, and profit quality. That cleanup became the foundation everything else stood on.</p></div>
+        </div>
+        <div class="row-item reveal d2">
+          <div class="badge-n">2</div>
+          <div><h4>The data lived in a dozen places</h4><p>Market data, internal performance, and field knowledge were scattered across separate systems and people's heads. I pulled third party market data, internal dashboards, and raw extracts together and reconciled them into one model, which meant a lot of careful, unglamorous matching to make sure the numbers actually lined up.</p></div>
+        </div>
+        <div class="row-item reveal d3">
+          <div class="badge-n">3</div>
+          <div><h4>The numbers alone can be misleading</h4><p>Early on, the analysis pointed at markets that looked great on paper but were not realistic to win. The fix was not more spreadsheets, it was conversations. Talking to the field separated the attractive markets from the achievable ones, and it genuinely changed my answer.</p></div>
+        </div>
+        <div class="row-item reveal d4">
+          <div class="badge-n">4</div>
+          <div><h4>Learning an entire industry on the clock</h4><p>I started with almost no flour or foodservice background. Getting fluent fast, in the products, the channels, the customers, and the economics, meant asking a lot of questions and earning time with busy people. The immersion was steep, but it is the reason the final recommendation sounded like it came from someone who knew the business.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The Framework</span>
+        <h2 class="title">Six lenses, one scoring model, a defensible answer.</h2>
+        <p>Instead of arguing from instinct, I built a weighted scoring framework that blended six independent perspectives into one transparent ranking. Click a lens to see what it captured.</p>
+      </div>
+      <div class="frame-layout">
+        <div class="reveal">
+          <div class="dim active" data-i="0"><span class="idx">1</span><span class="lbl">Market Opportunity</span></div>
+          <div class="dim" data-i="1"><span class="idx">2</span><span class="lbl">Market Health</span></div>
+          <div class="dim" data-i="2"><span class="idx">3</span><span class="lbl">Future Growth</span></div>
+          <div class="dim" data-i="3"><span class="idx">4</span><span class="lbl">Population &amp; HQ Inflow</span></div>
+          <div class="dim" data-i="4"><span class="idx">5</span><span class="lbl">Trajectory Proof</span></div>
+          <div class="dim" data-i="5"><span class="idx">6</span><span class="lbl">Logistics &amp; Cost to Serve</span></div>
+        </div>
+        <div class="dim-detail reveal d1" id="dimDetail">
+          <div class="qmark">"</div>
+          <div class="dtag" id="dTag">Lens 1 · Highest weight</div>
+          <h3 id="dTitle">Where is the biggest untapped runway?</h3>
+          <p id="dText">Sizing the gap between what a market could be and what it is today. This was the most heavily weighted signal, because it points straight at where attention pays off most.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sky">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Field Insights</span>
+        <h2 class="title">The layer that made it real.</h2>
+        <p>The data sized the prize. The field told me how to actually go get it. I built a living insights log so this knowledge would not disappear when the internship ended.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal d1">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.2L4 17.5z"/></svg></div>
+          <h3>Cost to serve is everything</h3>
+          <p>A market can look perfect on paper and still be unprofitable to reach. The field reframed several opportunities around freight and proximity, not just demand.</p>
+        </div>
+        <div class="card reveal d2">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/></svg></div>
+          <h3>Product fit beats price</h3>
+          <p>Across territories the same theme surfaced. Some opportunities needed a better product match, not a sharper price. That reframed what was realistic to chase.</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 4.5a3 3 0 0 1 0 6.5M21 20c0-2.6-1.6-4.6-4-5.2"/></svg></div>
+          <h3>The field changed the answer</h3>
+          <p>Meeting with the full sales team turned a clean but theoretical analysis into a practical plan. The recommendation got better every time I talked to someone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ WORK ============ -->
+<div class="page" id="work">
+  <section class="pad-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The Work</span>
+        <h2 class="title">One question, answered five different ways.</h2>
+        <p class="lead">A strategy is only as good as how far it travels. I built the full kit, from a deep analytical engine to a one page summary an executive could absorb in a minute.</p>
+      </div>
+      <div class="port-grid">
+        <div class="card reveal d1">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg></div>
+          <div class="num-tag">Analytical engine</div>
+          <h3>The Analysis Workbook</h3>
+          <p>The room where the work happened. A structured model that combined demographic, market, and operational signals, standardized the metrics, and turned messy inputs into a clean, defensible score.</p>
+          <div class="chips"><span class="chip">Pivot tables</span><span class="chip">Scoring model</span><span class="chip">Reconciliation</span></div>
+        </div>
+        <div class="card reveal d2">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+          <div class="num-tag">Executive brief</div>
+          <h3>The Executive Summary</h3>
+          <p>A tight, leadership ready narrative that moved from situation to recommendation without losing the reader, written for people whose time is measured in minutes.</p>
+          <div class="chips"><span class="chip">Narrative</span><span class="chip">Synthesis</span></div>
+        </div>
+        <div class="card reveal d3">
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div>
+          <div class="num-tag">One pager</div>
+          <h3>The One Page Story</h3>
+          <p>The entire argument distilled onto a single page. The answer, the why, and the next moves, designed so anyone could grasp the strategy at a glance and leave aligned.</p>
+          <div class="chips"><span class="chip">Distillation</span><span class="chip">Clarity</span></div>
+        </div>
+        <div class="card reveal d1">
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div class="num-tag">Panel presentation</div>
+          <h3>The Final Deck</h3>
+          <p>The capstone. A panel presentation that carried the recommendation from opening question to phased action plan, built to hold a room and survive tough questions.</p>
+          <div class="chips"><span class="chip">Storytelling</span><span class="chip">Design</span></div>
+        </div>
+        <div class="card reveal d2">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+          <div class="num-tag">Digital build</div>
+          <h3>The Website I Left Behind</h3>
+          <p>The site I built to hand the project off to General Mills, and the same one you are reading now. I wrote it in VS Code, paired with Codex, then designed and shipped the whole thing myself.</p>
+          <div class="chips"><span class="chip">VS Code</span><span class="chip">Codex</span><span class="chip">Self taught</span></div>
+        </div>
+        <div class="card reveal d3">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7 5"/></svg></div>
+          <div class="num-tag">Field intelligence</div>
+          <h3>The Field Insights Log</h3>
+          <p>A living record of what I learned from the people closest to the market. The qualitative layer that separated attractive markets from genuinely realistic ones.</p>
+          <div class="chips"><span class="chip">Interviews</span><span class="chip">Living doc</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sky">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The Toolkit</span>
+        <h2 class="title">What I worked with every day.</h2>
+        <p>I leaned on a mix of market data, internal dashboards, and a lot of hands on analysis, then I sat down with the people who knew the answers the data could not give me, and built the website to tie it all together.</p>
+      </div>
+      <div class="tool-grid">
+        <div class="tool reveal d1"><h4>Circana Market Data</h4><p>Third party data to size categories, channels, and regional momentum at scale.</p></div>
+        <div class="tool reveal d2"><h4>Tableau Dashboards</h4><p>Internal dashboards to track performance and pressure test what the market data implied.</p></div>
+        <div class="tool reveal d3"><h4>Excel &amp; Pivot Tables</h4><p>The workhorse for cleaning, reconciling, modeling, and scoring everything by hand.</p></div>
+        <div class="tool reveal d4"><h4>VS Code &amp; Codex</h4><p>Where I wrote, designed, and shipped the General Mills website, with Codex as an AI pair programmer.</p></div>
+        <div class="tool reveal d5"><h4>The FSI Team</h4><p>One on one meetings across the Foodservice Ingredients team, the most valuable source of all.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ IMPACT ============ -->
+<div class="page" id="impact">
+  <section class="pad-top" style="padding-bottom:36px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">The Journey</span>
+        <h2 class="title">Ten weeks, end to end.</h2>
+        <p class="lead">This was more than a single project. It was a fast, full immersion into how a national sales organization really works, from the field floor to the leadership room.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Weeks 1 to 2 · Getting Oriented</div>
+          <h3>Understanding foodservice and General Mills</h3>
+          <p>I spent my first two weeks learning the company and the foodservice ingredients business from the ground up. The products, the channels, the customers, and the metrics the team lives by, plus how General Mills actually operates day to day.</p>
+        </div>
+        <div class="tl-item reveal d1">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Week 3 · Sales Immersion</div>
+          <h3>Out in the field on live sales calls</h3>
+          <p>I rode along on real sales calls with a customer account specialist and an account executive, across a range of channels including lodging, commercial, and non commercial operators. Seeing the business at the table changed how I read every number afterward.</p>
+        </div>
+        <div class="tl-item reveal d2">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Weeks 4 to 5 · Building the Foundation</div>
+          <h3>Framing the question and the model</h3>
+          <p>I reframed a broad prompt into something I could actually score. I standardized the metrics, chose the six lenses, and assembled the analytical workbook that everything else would be built on.</p>
+        </div>
+        <div class="tl-item reveal d3">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Weeks 6 to 8 · Stakeholder Engagement</div>
+          <h3>Meeting everyone on the team</h3>
+          <p>I ran one on one conversations across the FSI sales team. Their real world perspective grounded the analysis, surfaced themes the data could not see, and sharpened the recommendation in ways a spreadsheet never would.</p>
+        </div>
+        <div class="tl-item reveal d4">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Weeks 8 to 9 · Synthesis &amp; the Build</div>
+          <h3>Turning analysis into a tool</h3>
+          <p>I translated the model and the field intelligence into a phased, practical plan, and built the website in VS Code, paired with Codex, so the team could keep exploring the work long after I left.</p>
+        </div>
+        <div class="tl-item reveal d5">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Week 10 · The Panel</div>
+          <h3>Presenting to leadership</h3>
+          <p>The work ended where it was always headed, in front of senior leaders, with a full handoff kit so the thinking could keep moving. I left with a recommendation on the table and work I would put my name on anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:34px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">What Changed</span>
+        <h2 class="title">The improvements I am proudest of.</h2>
+        <p>Beyond the recommendation itself, a few things I built will keep paying off after the internship.</p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card reveal d1"><h4>A cleaner way to keep score</h4><p>I standardized how volume, value, and profit quality get measured, so the team now has one consistent language instead of competing versions of the truth.</p></div>
+        <div class="impact-card reveal d2"><h4>A reusable strategy tool</h4><p>The scoring model and the website give the team a repeatable way to look at geographic focus, not a one time slide that gets forgotten.</p></div>
+        <div class="impact-card reveal d3"><h4>Field knowledge that stays</h4><p>The living insights log captures hard won field knowledge in one place, so it does not walk out the door when people move roles.</p></div>
+        <div class="impact-card reveal d4"><h4>A focus, not a wish list</h4><p>The biggest shift was moving the conversation from selling everywhere to a prioritized, defensible focus the team can actually execute.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sky">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">What I Took Away</span>
+        <h2 class="title">Skills I built and sharpened.</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill reveal"><h4>Strategic Analysis</h4><p>Turning a vague, open ended question into a structured, weighted, defensible framework.</p></div>
+        <div class="skill reveal d1"><h4>Stakeholder Engagement</h4><p>Running candid one on ones with experienced salespeople and turning conversation into insight.</p></div>
+        <div class="skill reveal d2"><h4>Data Storytelling</h4><p>Making numbers mean something and distilling complexity into a story a panel can follow.</p></div>
+        <div class="skill reveal d3"><h4>Executive Communication</h4><p>Writing for people with no time. One pagers, briefs, and decks that respect the reader.</p></div>
+        <div class="skill reveal"><h4>Foodservice Acumen</h4><p>Learning an entire industry, products, channels, logistics, and economics, in real time.</p></div>
+        <div class="skill reveal d1"><h4>Web Development</h4><p>Self teaching enough to build and ship a custom website in VS Code, paired with Codex.</p></div>
+        <div class="skill reveal d2"><h4>Data Tools</h4><p>Circana, Tableau, and heavy Excel work, from raw extracts to a finished model.</p></div>
+        <div class="skill reveal d3"><h4>Ownership</h4><p>Carrying one ambiguous problem from a blank page all the way to a leadership presentation.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT / CONTACT ============ -->
+<div class="page" id="about">
+  <section class="pad-top">
+    <div class="wrap">
+      <div class="profile-row reveal">
+        <img class="avatar" src="data:image/jpeg;base64,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" alt="Jake Gilstein headshot" />
+        <div class="profile-info">
+          <span class="kicker">About Me</span>
+          <h2 class="title" style="margin-bottom:6px">Jake Gilstein</h2>
+          <div class="role">North America Foodservice Sales Intern · General Mills · FSI West Zone</div>
+          <div class="contact-list">
+            <a href="https://www.linkedin.com/in/jakegilstein/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg> LinkedIn</a>
+            <a href="mailto:jmgilstein@gmail.com"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg> jmgilstein@gmail.com</a>
+            <a href="tel:+12678978687"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h3l2 5-2 1a12 12 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> (267) 897-8687</a>
+          </div>
+        </div>
+      </div>
+      <div class="about-body reveal d1">
+        <p class="lead" style="margin-bottom:18px">I am a Business Management major and Marketing minor at the University of South Florida, with prior experience in strategic sales and 3PL logistics.</p>
+        <p class="lead" style="margin-bottom:18px">I came into General Mills as a North America Foodservice sales intern with one mandate, to turn a broad, ambiguous strategy question into something a leadership panel could actually act on. Over ten weeks I learned the flour business from the ground up, pressure tested my thinking with the field, and built an analytical case grounded in real market dynamics.</p>
+        <p class="lead">The Flour Frontier project is the work I am proudest of so far. A defensible recommendation, a clean analytical foundation, a custom website the team can keep using, and a presentation built to land in the room.</p>
+        <div class="chips">
+          <span class="chip">Sales Strategy</span>
+          <span class="chip">Market Analysis</span>
+          <span class="chip">Stakeholder Engagement</span>
+          <span class="chip">Data Storytelling</span>
+          <span class="chip">Foodservice</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="navy contact">
+    <div class="wrap reveal">
+      <span class="kicker">Let's Connect</span>
+      <h2>Thanks for reading.<br/>I would love to stay in touch.</h2>
+      <p style="color:rgba(255,255,255,0.85)">If you are building something at the intersection of strategy, sales, and analysis, or you just want to talk foodservice, data, or how to make a great pitch, my inbox is open.</p>
+      <div class="actions" style="justify-content:center">
+        <a href="https://www.linkedin.com/in/jakegilstein/" target="_blank" rel="noopener" class="btn btn-light">Connect on LinkedIn</a>
+        <a href="mailto:jmgilstein@gmail.com" class="btn btn-outline-l">jmgilstein@gmail.com</a>
+        <a href="tel:+12678978687" class="btn btn-outline-l">(267) 897-8687</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div>
+    <div class="brand" style="margin-bottom:6px"><div class="mark" style="width:28px;height:28px;font-size:1rem">F</div><b>Flour <span>Frontier</span></b></div>
+    <div>© 2026 Jake Gilstein · Built and designed independently in VS Code.</div>
+  </div>
+  <div class="disclaimer">This site reflects a personal account of a learning experience. It contains no confidential, proprietary, or non public company information. All figures, customers, competitors, and internal specifics have been intentionally omitted. Views are my own and do not represent my employer.</div>
+</footer>
+
+<script>
+  // page routing
+  const pages=document.querySelectorAll('.page'),tabs=document.querySelectorAll('[data-go]');
+  function go(id){
+    pages.forEach(p=>p.classList.toggle('active',p.id===id));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.go===id));
+    window.scrollTo(0,0);
+    const active=document.getElementById(id);
+    active.querySelectorAll('.reveal').forEach(el=>el.classList.remove('in'));
+    requestAnimationFrame(()=>{active.querySelectorAll('.reveal').forEach(el=>{
+      const r=el.getBoundingClientRect();if(r.top<window.innerHeight-40)el.classList.add('in');});});
+    document.getElementById('tabs').classList.remove('open');
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>go(t.dataset.go)));
+
+  // progress + nav shadow
+  const nav=document.getElementById('nav'),prog=document.getElementById('progress');
+  function onScroll(){
+    const st=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?st/h*100:0)+'%';
+    nav.classList.toggle('scrolled',st>30);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // mobile menu
+  document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('tabs').classList.toggle('open'));
+
+  // reveal observer
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // framework
+  const dims=[
+    {tag:'Lens 1 · Highest weight',title:'Where is the biggest untapped runway?',text:'Sizing the gap between what a market could be and what it is today. This was the most heavily weighted signal, because it points straight at where attention pays off most.'},
+    {tag:'Lens 2 · Momentum check',title:'Is the market healthy right now?',text:'Reading current direction and momentum, so the focus chased markets that were actually moving the right way, not just markets that were large on paper.'},
+    {tag:'Lens 3 · The long game',title:'Where is growth headed next?',text:'Layering a forward looking, ten year view of demand growth on top of today, so the plan skates to where the puck is going, not where it has been.'},
+    {tag:'Lens 4 · People follow people',title:'Where are population and business moving?',text:'Tracking where households and corporate headquarters are relocating. These population influxes are leading indicators of demand that show up well before the sales numbers do.'},
+    {tag:'Lens 5 · Show me it works',title:'Is there proof of trajectory?',text:'Looking for real, observable evidence that focus converts into wins, so the recommendation rested on track record and not just theory.'},
+    {tag:'Lens 6 · Can we serve it?',title:'Does the logistics math work?',text:'Grounding everything in cost to serve and network reality, because a great market you cannot supply efficiently is not really an opportunity yet.'}
+  ];
+  const dimEls=document.querySelectorAll('.dim'),dTag=document.getElementById('dTag'),dTitle=document.getElementById('dTitle'),dText=document.getElementById('dText'),detail=document.getElementById('dimDetail');
+  dimEls.forEach(d=>d.addEventListener('click',()=>{
+    dimEls.forEach(x=>x.classList.remove('active'));d.classList.add('active');
+    const i=+d.dataset.i;detail.style.opacity=0;
+    setTimeout(()=>{dTag.textContent=dims[i].tag;dTitle.textContent=dims[i].title;dText.textContent=dims[i].text;detail.style.transition='opacity .35s';detail.style.opacity=1;},150);
+  }));
+
+  // hero particle field
+  const cv=document.getElementById('grain');
+  if(cv){
+    const ctx=cv.getContext('2d');let W,H,parts;
+    function size(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;const n=Math.min(60,Math.floor(W/24));
+      parts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.7+0.4,vy:Math.random()*0.3+0.06,vx:(Math.random()-0.5)*0.15,a:Math.random()*0.4+0.12,red:Math.random()<0.25}));}
+    function draw(){ctx.clearRect(0,0,W,H);parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;if(p.y>H+5){p.y=-5;p.x=Math.random()*W;}
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=(p.red?'rgba(200,16,46,':'rgba(31,111,224,')+p.a+')';ctx.fill();});requestAnimationFrame(draw);}
+    window.addEventListener('resize',size);if(cv.offsetWidth){size();draw();}
+  }
+</script>
+</body>
+</html>
