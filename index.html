@@ -716,8 +716,7 @@
     const ctx=cv.getContext('2d');let W,H,parts;
     function size(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;const n=Math.min(60,Math.floor(W/24));
       parts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.7+0.4,vy:Math.random()*0.3+0.06,vx:(Math.random()-0.5)*0.15,a:Math.random()*0.4+0.12,red:Math.random()<0.25}));}
-    function draw(){ctx.clearRect(0,0,W,H);parts.forEach(p=>{
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=(p.red?'rgba(200,16,46,':'rgba(31,111,224,')+p.a+')';ctx.fill();});}
+    function draw(){ctx.clearRect(0,0,W,H);}
     window.addEventListener('resize',size);if(cv.offsetWidth){size();draw();}
   }
 </script>
