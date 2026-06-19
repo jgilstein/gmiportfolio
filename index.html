@@ -18,8 +18,8 @@
     --red:#c8102e;
     --red-dk:#9e0c24;
     --red-soft:#fdebee;
-    --ink:#474747;
-    --ink-2:#474747;
+    --ink:#0e2138;
+    --ink-2:#33475c;
     --muted:#62748a;
     --line:#dbe5f2;
     --line-2:#c8d6ea;
@@ -96,6 +96,7 @@
       radial-gradient(700px 460px at 12% 92%,rgba(200,16,46,0.07),transparent 60%),
       linear-gradient(170deg,#fff 0%,var(--gm-sky) 100%);
   }
+  .hero canvas{position:absolute;inset:0;opacity:.7;pointer-events:none}
   .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%}
   .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:40px;padding:7px 16px;font-size:.8rem;font-weight:500;color:var(--gm-blue);margin-bottom:26px;box-shadow:var(--shadow)}
   .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
@@ -280,11 +281,12 @@
 <!-- ============ HOME ============ -->
 <div class="page active" id="home">
   <header class="hero">
+    <canvas id="grain"></canvas>
     <div class="hero-inner">
       <div class="badge reveal"><span class="dot"></span> General Mills · North America Foodservice · Summer 2026</div>
       <h1 class="reveal d1">The <em>Flour Frontier</em><br/>Project</h1>
       <p class="lead reveal d2">For ten weeks I got to chase one big question for one of the most recognizable food companies in America: over the next decade, where should our flour business actually plant its flag?</p>
-      <p class="lead reveal d3"><strong>Jake Gilstein</strong>, North America Foodservice Sales Intern on the Foodservice Ingredients West Zone team. University of South Florida, Business Management major and Marketing minor, with a background in distributor sales and 3PL logistics.</p>
+      <p class="who reveal d3"><b>Jake Gilstein</b>, North America Foodservice Sales Intern on the Foodservice Ingredients West Zone team. University of South Florida, Business Management major and Marketing minor, with a background in strategic sales and 3PL logistics.</p>
       <div class="actions reveal d4">
         <button class="btn btn-primary" data-go="project">See how it came together</button>
         <button class="btn btn-ghost" data-go="work">View the deliverables</button>
@@ -412,7 +414,6 @@
           <div class="dim" data-i="5"><span class="idx">6</span><span class="lbl">Logistics &amp; Cost to Serve</span></div>
         </div>
         <div class="dim-detail reveal d1" id="dimDetail">
-          <div class="qmark">"</div>
           <div class="dtag" id="dTag">Lens 1 · Highest weight</div>
           <h3 id="dTitle">Where is the biggest untapped runway?</h3>
           <p id="dText">Sizing the gap between what a market could be and what it is today. This was the most heavily weighted signal, because it points straight at where attention pays off most.</p>
@@ -464,7 +465,7 @@
           <div class="num-tag">Analytical engine</div>
           <h3>The Analysis Workbook</h3>
           <p>The room where the work happened. A structured model that combined demographic, market, and operational signals, standardized the metrics, and turned messy inputs into a clean, defensible score.</p>
-          <div class="chips"><span class="chip">Pivot tables</span><span class="chip">Scoring model</span><span class="chip">Reconciliation</span></div>
+          <div class="chips"><span class="chip">Pivot tables</span><span class="chip">Scoring model</span></div>
         </div>
         <div class="card reveal d2">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
@@ -513,7 +514,7 @@
         <p>I leaned on a mix of market data, internal dashboards, and a lot of hands on analysis, then I sat down with the people who knew the answers the data could not give me, and built the website to tie it all together.</p>
       </div>
       <div class="tool-grid">
-        <div class="tool reveal d1"><h4>Circana Market Data</h4><p>Third party data to size categories, channels, and regional momentum at scale.</p></div>
+        <div class="tool reveal d1"><h4>Circana &amp; Nielsen</h4><p>Third party market and DMA data to size categories, channels, and regional momentum.</p></div>
         <div class="tool reveal d2"><h4>Tableau Dashboards</h4><p>Internal dashboards to track performance and pressure test what the market data implied.</p></div>
         <div class="tool reveal d3"><h4>Excel &amp; Pivot Tables</h4><p>The workhorse for cleaning, reconciling, modeling, and scoring everything by hand.</p></div>
         <div class="tool reveal d4"><h4>VS Code &amp; Codex</h4><p>Where I wrote, designed, and shipped the General Mills website, with Codex as an AI pair programmer.</p></div>
@@ -618,7 +619,7 @@
         <div class="profile-info">
           <span class="kicker">About Me</span>
           <h2 class="title" style="margin-bottom:6px">Jake Gilstein</h2>
-          <div class="role">North America Foodservice (NAF) Sales Intern · General Mills · FSI West Zone</div>
+          <div class="role">North America Foodservice Sales Intern · General Mills · FSI West Zone</div>
           <div class="contact-list">
             <a href="https://www.linkedin.com/in/jakegilstein/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg> LinkedIn</a>
             <a href="mailto:jmgilstein@gmail.com"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg> jmgilstein@gmail.com</a>
@@ -627,9 +628,8 @@
         </div>
       </div>
       <div class="about-body reveal d1">
-        <p class="lead" style="margin-bottom:18px">I am a Business Management major and Marketing minor at the University of South Florida, with prior experience in strategic sales and 3PL logistics.</p>
-        <p class="lead" style="margin-bottom:18px">I came into General Mills as a North America Foodservice sales intern with one mandate, to turn a broad, ambiguous strategy question into something a leadership panel could actually act on. Over ten weeks I learned the flour business from the ground up, pressure tested my thinking with the field, and built an analytical case grounded in real market dynamics.</p>
-        <p class="lead">The Flour Frontier project is the work I am proudest of so far. A defensible recommendation, a clean analytical foundation, a custom website the team can keep using, and a presentation built to land in the room.</p>
+        <p class="lead" style="margin-bottom:18px">I am Jake Gilstein, a North America Foodservice Sales Intern at General Mills in the Summer 2026 cohort. I am a senior at the University of South Florida graduating December 2026 with a B.S. in Business Management and a Minor in Marketing. Born in Brooklyn, NY. Raised in Philadelphia, PA. Now splitting time between St. Augustine, FL and Tampa, FL. In my free time, I enjoy weightlifting, boxing, running, and listening to '70s-90's r&amp;b &amp; disco. I can almost always be spotted wearing one of three things: a quarter zip, a Knicks jersey, or loafers.</p>
+        <p class="lead">My background blends two angles that turned out to be directly useful at General Mills. I spent the last 8 to 9 months at Scotlynn as a Logistics Account Manager Associate, brokering freight partnerships for major CPG clients, which gave me a working knowledge of how product physically gets from a plant to a customer. The summer before that I was a Strategic Sales Intern at a wholesale distributor called The H.T. Hackney Co. in Tampa, FL, doing 60 store visits per week analyzing buyer behavior and refining route-to-market strategy. The 3PL firm work and the strategic CPG sales work both showed up directly in the Flour Frontier analysis.</p>
         <div class="chips">
           <span class="chip">Sales Strategy</span>
           <span class="chip">Market Analysis</span>
@@ -709,6 +709,17 @@
     const i=+d.dataset.i;detail.style.opacity=0;
     setTimeout(()=>{dTag.textContent=dims[i].tag;dTitle.textContent=dims[i].title;dText.textContent=dims[i].text;detail.style.transition='opacity .35s';detail.style.opacity=1;},150);
   }));
+
+  // hero particle field
+  const cv=document.getElementById('grain');
+  if(cv){
+    const ctx=cv.getContext('2d');let W,H,parts;
+    function size(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;const n=Math.min(60,Math.floor(W/24));
+      parts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.7+0.4,vy:Math.random()*0.3+0.06,vx:(Math.random()-0.5)*0.15,a:Math.random()*0.4+0.12,red:Math.random()<0.25}));}
+    function draw(){ctx.clearRect(0,0,W,H);parts.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=(p.red?'rgba(200,16,46,':'rgba(31,111,224,')+p.a+')';ctx.fill();});}
+    window.addEventListener('resize',size);if(cv.offsetWidth){size();draw();}
+  }
 </script>
 </body>
 </html>
