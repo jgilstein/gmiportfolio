@@ -96,7 +96,6 @@
       radial-gradient(700px 460px at 12% 92%,rgba(200,16,46,0.07),transparent 60%),
       linear-gradient(170deg,#fff 0%,var(--gm-sky) 100%);
   }
-  .hero canvas{position:absolute;inset:0;opacity:.7;pointer-events:none}
   .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%}
   .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:40px;padding:7px 16px;font-size:.8rem;font-weight:500;color:var(--gm-blue);margin-bottom:26px;box-shadow:var(--shadow)}
   .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
@@ -281,7 +280,6 @@
 <!-- ============ HOME ============ -->
 <div class="page active" id="home">
   <header class="hero">
-    <canvas id="grain"></canvas>
     <div class="hero-inner">
       <div class="badge reveal"><span class="dot"></span> General Mills · North America Foodservice · Summer 2026</div>
       <h1 class="reveal d1">The <em>Flour Frontier</em><br/>Project</h1>
@@ -710,15 +708,6 @@
     setTimeout(()=>{dTag.textContent=dims[i].tag;dTitle.textContent=dims[i].title;dText.textContent=dims[i].text;detail.style.transition='opacity .35s';detail.style.opacity=1;},150);
   }));
 
-  // hero particle field
-  const cv=document.getElementById('grain');
-  if(cv){
-    const ctx=cv.getContext('2d');let W,H,parts;
-    function size(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;const n=Math.min(60,Math.floor(W/24));
-      parts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.7+0.4,vy:Math.random()*0.3+0.06,vx:(Math.random()-0.5)*0.15,a:Math.random()*0.4+0.12,red:Math.random()<0.25}));}
-    function draw(){ctx.clearRect(0,0,W,H);}
-    window.addEventListener('resize',size);if(cv.offsetWidth){size();draw();}
-  }
 </script>
 </body>
 </html>
